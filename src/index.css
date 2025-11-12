@@ -1,0 +1,29 @@
+@import "tailwindcss";
+.ant-btn{
+    color: white;
+    background-color: coral;
+}
+.ant-btn:hover{
+    background-color: rgb(196, 88, 48)!important;
+    color: white !important;
+    border: none !important;
+}
+.ant-input:hover{
+    border-color: coral;
+}
+.ant-input:focus{
+    border-color: coral;
+}
+
+.ant-select-selector {
+border-radius: 40px !important;
+height: 42px !important;
+padding: 24px !important;
+border-color: rgb(255, 239, 209) !important;
+}
+.ant-select-arrow{
+    margin-top: 5px !important;
+}
+.ant-space{
+    padding: 10px;
+}
