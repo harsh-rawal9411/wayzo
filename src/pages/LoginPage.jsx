@@ -1,67 +1,116 @@
 import React, { useState } from 'react'
-import { IoClose } from "react-icons/io5";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
-import Header from '../components/Header'
-import Register from '../assets/Register.jpg'
-import { Input,Button } from 'antd';
+import Register from '../assets/Register.jpg';
+import { Input, Button } from 'antd';
 
 const LoginPage = () => {
-     const [shoePassword, setShowPassword] = useState(false)
-     const [userName , setUserName] = useState('')
-     const [password , setPassword] = useState('')
-        const navigate = useNavigate();
-        
-       const handleLogin = () => {
-            if(userName === 'harsh123' && password === 'harsh123'){
-                navigate('/');
-            } else {
-                alert('Invalid username or password')
-            }
-        }
+  const [showPassword, setShowPassword] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
 
-    return (
-        <div className="">
-       
-            <div className='flex justify-center items-center mt-15 '>
-                <div className=' w-1/2' >
-                    <img src={Register} className='w-[75%]' alt="" />
-                </div>
-                <div className='px-10 w-[35%] h-[370px] py-6 rounded-2xl shadow-amber-500 shadow-2xl border-amber-400 mt-4 mb-4 border text-center'>
-                  <form action="" onSubmit={handleLogin}>  <div>
-                        <div className='flex justify-between mb-4'>
-                            <h1 className='text-2xl font-bold'>Login </h1>
+  const navigate = useNavigate();
 
-                        </div>
-                        <div className='mb-2'>
-                            <h1 className='mb-1  text-left'>
-                             Username
-                            </h1>
-                            <Input type="text" placeholder='Username' required value={userName} onChange={(e) => setUserName(e.target.value)} className='border w-full p-1' />
-                        </div>
-                        <div className='mb-2'>
-                            <h1 className='mb-1 text-left'>Password</h1>
-                            <div className='flex items-center'>
-                                <Input type={shoePassword ? "text" : "password"}
-                                     value={password}
-                                     onChange={(e) => setPassword(e.target.value)} required placeholder='password' id="" className='border  w-full p-1' />
-                                <span className='ml-[-25px] z-50' onClick={() => setShowPassword(!shoePassword)}>{shoePassword ? <IoMdEye /> : <IoMdEyeOff />}</span>
-                            </div>
-                        </div>
-                        <div className='flex  justify-end mb-6'>Forgot Password ?</div>
-                        <div className='flex justify-center mb-2'>
-                            <Button htmlType='submit' className='bg-amber-500 text-white w-full rounded-2xl p-1 hover:bg-orange-500 hover:cursor-pointer'>Login</Button>
-                        </div>
-                        <span
-                            onClick={() => navigate('/signup')}
-                            className='flex justify-end hover:cursor-pointer'>Do not have Accont ?</span>
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (userName === 'harsh123' && password === 'harsh123') {
+      navigate('/');
+    } else {
+      alert('Invalid username or password');
+    }
+  };
 
-
-                    </div></form>
-                </div>
-            </div>
+  return (
+    <div className="w-full min-h-screen flex justify-center items-center px-4 py-8">
+      <div
+        className="
+        flex flex-col md:flex-row
+        items-center justify-center
+        gap-10 md:gap-20
+        w-full max-w-5xl
+      "
+      >
+        {/* IMAGE SECTION */}
+        <div className="md:w-1/2 flex justify-center">
+          <img
+            src={Register}
+            alt="Login"
+            className="w-full max-w-[350px] sm:max-w-[450px] md:max-w-[500px] rounded-xl"
+          />
         </div>
-    )
-}
 
-export default LoginPage
+        {/* FORM SECTION */}
+        <div className="
+          w-full md:w-[45%] 
+          bg-white
+          border border-amber-400 
+          rounded-2xl 
+          shadow-lg shadow-amber-500/40 
+          p-6 sm:p-8
+        "
+        >
+          <form onSubmit={handleLogin}>
+            <h1 className="text-2xl font-bold mb-4 text-center">Login</h1>
+
+            {/* USERNAME */}
+            <div className="mb-4">
+              <label className="font-semibold">Username</label>
+              <Input
+                type="text"
+                placeholder="Username"
+                required
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                className="mt-1"
+              />
+            </div>
+
+            {/* PASSWORD */}
+            <div className="mb-4">
+              <label className="font-semibold">Password</label>
+              <div className="flex items-center mt-1 relative">
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <span
+                  className="absolute right-3 cursor-pointer text-lg"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <IoMdEye /> : <IoMdEyeOff />}
+                </span>
+              </div>
+            </div>
+
+            {/* FORGOT PASSWORD */}
+            <div className="flex justify-end text-sm text-gray-500 mb-4">
+              Forgot Password ?
+            </div>
+
+            {/* LOGIN BUTTON */}
+            <Button
+              htmlType="submit"
+              className="bg-amber-500 text-white w-full rounded-xl py-2 text-lg hover:bg-orange-500"
+            >
+              Login
+            </Button>
+
+            {/* SIGNUP LINK */}
+            <div className="flex justify-end mt-3 text-sm">
+              <span
+                onClick={() => navigate('/signup')}
+                className="hover:text-orange-500 cursor-pointer"
+              >
+                Don't have an account?
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default LoginPage;

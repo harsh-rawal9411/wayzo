@@ -6,65 +6,73 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchTours } from "../redux/tourSlice";
 import { MdOutlinePeopleOutline } from "react-icons/md";
 import Ladakh from "../assets/Ladakh.avif";
-import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import Footer from "../components/Footer";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { tours } = useSelector((state) => state.tour);
 
-  const { tours, error } = useSelector((state) => state.tour);
-  const [curretTours, setCurrentTours] = useState(0);
+  const [currentStart, setCurrentStart] = useState(0);
 
   useEffect(() => {
     dispatch(fetchTours());
   }, [dispatch]);
 
   const nextSlide = () => {
-    if (curretTours + 4 < tours.length) {
-      setCurrentTours(curretTours + 4);
-    }
-  };
-  const prevSlide = () => {
-    if (curretTours - 4 >= 0) {
-      setCurrentTours(curretTours - 4);
+    if (currentStart + 4 < tours.length) {
+      setCurrentStart(currentStart + 4);
     }
   };
 
-  const visibleTours = tours.slice(curretTours, curretTours + 4);
+  const prevSlide = () => {
+    if (currentStart - 4 >= 0) {
+      setCurrentStart(currentStart - 4);
+    }
+  };
+
+  const visibleTours = tours.slice(currentStart, currentStart + 4);
+
+  const viewTrip = (id, tour) => {
+    navigate(`${id}/tripdetails`, { state: { tour } });
+  };
 
   return (
-    <div>
-      <div className="bg-gray-300 h-22 mt-[-90px] fixed z-50 w-full">
+    <div className="w-full">
+      {/* Sticky Header */}
+      <div className="fixed top-0 w-full z-50 bg-gray-300 shadow">
         <Header />
       </div>
-      <div className=" mt-20 flex justify-between">
-        <div className=" flex-col  w-full justify-items-center">
-          <div
-            className="h-[400px] bg-cover bg-center  mt-[-56px]  w-[100%] font-bold"
-            style={{ backgroundImage: `url(${ProfileBg2})` }}
-          >
-            <Button className="mt-[28%] ml-[80%] flex justify-end items-end absolute">
-              Upload Profile Image
-            </Button>
-          </div>
-        </div>
+
+      {/* Banner */}
+      <div
+        className="w-full h-[220px] md:h-[320px] bg-cover bg-center mt-16 relative"
+        style={{ backgroundImage: `url(${ProfileBg2})` }}
+      >
+        <Button className="absolute bottom-4 right-4 bg-white shadow">
+          Upload Profile Image
+        </Button>
       </div>
-      <div className="flex ">
-        <span className="text-8xl mt-[-110px] mb-[110px] border-5 p-5 rounded-full px-8 text-amber-600 ml-5 bg-amber-200">
+
+      {/* Profile Info */}
+      <div className="flex items-center px-6 md:px-12 mt-[-40px]">
+        <div className="w-20 h-20 md:w-28 md:h-28 flex items-center justify-center rounded-full bg-amber-200 text-amber-600 font-bold text-4xl md:text-6xl shadow-md">
           H
-        </span>
-        <div className="ml-10 flex justify-between  w-full pr-10">
-          <div>
-            <div className="text-gray-700 text-2xl mt-4 font-bold">
-              harsh123
-            </div>
-            <div>Name: Harsh Rawal</div>
-            <div>Email: harsh@123.xy</div>
-            <div>City: Bijnor</div>
+        </div>
+
+        <div className="ml-4 md:ml-8">
+          <div className="text-xl md:text-2xl font-bold text-gray-700">
+            harsh123
           </div>
+          <div>Name: Harsh Rawal</div>
+          <div>Email: harsh@123.xy</div>
+          <div>City: Bijnor</div>
         </div>
       </div>
-      <div className="ml-[10%]">
+
+      {/* Tabs */}
+      <div className="px-4 md:px-12 mt-10">
         <Tabs
           defaultActiveKey="1"
           items={[
@@ -72,62 +80,73 @@ const Profile = () => {
               label: "My Tours",
               key: "1",
               children: (
-                <div className="flex items-center justify-between  ml-[-20px]    relative">
-                
-             
+                <div>
+                  {/* Slider Controls */}
+                  <div className="flex justify-between items-center mb-4">
+                    <Button onClick={prevSlide}>Previous</Button>
+                    <Button onClick={nextSlide}>Next</Button>
+                  </div>
+
+                  {/* Responsive Cards Grid */}
+                  <div className="
+                    grid grid-cols-1 
+                    sm:grid-cols-2 
+                    md:grid-cols-3 
+                    lg:grid-cols-4 
+                    gap-6
+                  ">
                     {visibleTours.map((tour, index) => (
                       <div
                         key={index}
-                        className="m-4 w-[250px] p-3 rounded-xl border-1 border-gray-300  overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-lg"
+                        className="bg-white p-3 rounded-xl border shadow hover:shadow-lg hover:scale-105 transition"
                       >
-                        <div>
-                          <span className="bg-amber-700 absolute mt-4 rounded-r-2xl text-white font-bold px-2 py-1 ">
+                        <div className="relative">
+                          <span className="absolute top-2 left-0 bg-amber-700 text-white px-2 py-1 rounded-r-xl text-sm">
                             {tour.destination}
                           </span>
-                          <img src={Ladakh} className="mb-3" alt="" />
+                          <img src={Ladakh} alt="" className="rounded-xl mb-3" />
                         </div>
-                        <span className="font-bold text-gray-600 ">
+
+                        <div className="font-bold text-gray-700 text-lg">
                           {tour.name}
-                        </span>
-                        <div className="text-[12px] line-clamp-4">
+                        </div>
+
+                        <p className="text-sm text-gray-600 line-clamp-3">
                           {tour.description}
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="flex gap-2">
-                            <MdOutlinePeopleOutline
-                              size={20}
-                              className="mt-1"
-                            />
-                            {tour.members}
+                        </p>
+
+                        <div className="flex justify-between mt-2 text-sm">
+                          <span className="flex items-center gap-1">
+                            <MdOutlinePeopleOutline size={18} /> {tour.members}
                           </span>
-                          <span className="text-[12px] mt-1 opacity-50">
-                            {tour.startDate} -- {tour.endDate}
+                          <span className="opacity-60">
+                            {tour.startDate} - {tour.endDate}
                           </span>
                         </div>
-                        <div className="flex  justify-between ">
+
+                        <div className="flex justify-between mt-2 items-center">
                           <Button
                             onClick={() => viewTrip(tour.id, tour)}
-                            className="bg-amber-500 px-5 py-1 rounded-full text-white mt-2 hover:bg-orange-500 hover:cursor-pointer"
+                            className="bg-amber-500 text-white rounded-full px-4 py-1 hover:bg-orange-500"
                           >
-                            View Details.
+                            View
                           </Button>
-                          <span className="text-amber-600 mt-2 ">
-                            {tour.price} /-
+                          <span className="text-amber-600 font-semibold">
+                            ₹{tour.price}
                           </span>
                         </div>
                       </div>
                     ))}
-                    
                   </div>
-             
+                </div>
               ),
             },
             {
               label: "Joined Tours",
               key: "2",
               children: (
-                <div className="flex justify-center items-center py-43 text-4xl font-bold text-gray-400">
-                    No Joined Tour
+                <div className="text-center py-20 text-gray-400 text-xl">
+                  No Joined Tour
                 </div>
               ),
             },
@@ -135,15 +154,16 @@ const Profile = () => {
               label: "Requests",
               key: "3",
               children: (
-                <div className="flex justify-center items-center py-43 text-4xl font-bold text-gray-400">
-                    No Joined Tour
+                <div className="text-center py-20 text-gray-400 text-xl">
+                  No Requests
                 </div>
               ),
             },
           ]}
         />
       </div>
-      <Footer/>
+
+      <Footer />
     </div>
   );
 };

@@ -1,56 +1,97 @@
-import React from 'react'
-import Header from '../components/Header'
-import Register from '../assets/Register.jpg'
-import { Input,Button } from 'antd'
+import React from 'react';
+import Register from '../assets/Register.jpg';
+import { Input, Button } from 'antd';
 
 const Signup = () => {
-    return (
-        <div className="">
-            {/* <div className="bg-gray-300 bg-cover bg-fixed bg-center w-full h-[90px]">
-                <Header />
-            </div> */}
-            <div className='flex mt-10 '>
-                <div className=' w-1/2' >
-                    <img src={Register} className='w-[75%]' alt="" />
-                </div>
-                <div className='px-10 w-[35%] py-6 rounded-2xl shadow-amber-500 shadow-2xl border-amber-400 mt-4 mb-4 border text-center'>
-                    <div style={{ fontFamily: "cursive" }} className="font-bold mb-4 text-xl">
-                        Create Your Account
-                    </div>
-                    <div className='flex-col justify-start text-left'>
-                    <div className='flex mb-2 gap-2 w-full'>
-                        <div><h1>First Name:</h1>
-                            <Input type="text"  name="" id="" />
-                        </div>
-                        <div>
-                            <h1>Last Name</h1>
-                            <Input type="text" name=""  id="" /></div>
-                    </div>
-                    <div className='mb-2'>
-                        <h1>Phone Number</h1>
-                        <Input type="text" id="" />
-                    </div>
-                    <div className='mb-2'>
-                        <h1>Email</h1>
-                        <Input type="email"  name="" id="" />
-                    </div>
-                    <div className='mb-2'>
-                        <h1>Set Password</h1>
-                        <Input type="password" name="" id="" />
-                    </div>
-                    <div className='mb-2'>
-                        <h1>Confirm Password</h1>
-                        <Input type="password" name="" id="" />
-                    </div>
-                    <div className='flex justify-end mt-8 gap-6'>
-                        <button type='reset'  className='border p-1 px-4 rounded-2xl border-amber-500 text-amber-500'>Clear all</button>
-                        <Button>Submit</Button>
-                    </div>
-                
-                </div></div>
-            </div>
+  return (
+    <div className="w-full min-h-screen flex justify-center items-center px-4 py-8">
+      <div
+        className="
+        flex flex-col md:flex-row
+        items-center justify-center
+        gap-10 md:gap-20
+        w-full max-w-5xl
+      "
+      >
+        {/* IMAGE SECTION */}
+        <div className="md:w-1/2 flex justify-center">
+          <img
+            src={Register}
+            alt="Signup"
+            className="w-full max-w-[350px] sm:max-w-[450px] md:max-w-[500px] rounded-xl"
+          />
         </div>
-    )
-}
 
-export default Signup
+        {/* FORM SECTION */}
+        <div className="
+          w-full md:w-[45%] 
+          bg-white
+          border border-amber-400 
+          rounded-2xl 
+          shadow-lg shadow-amber-500/40 
+          p-6 sm:p-8
+        "
+        >
+          <div 
+            style={{ fontFamily: "cursive" }}
+            className="font-bold mb-6 text-center text-2xl"
+          >
+            Create Your Account
+          </div>
+
+          {/* FIRST + LAST NAME */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label className="font-semibold">First Name</label>
+              <Input type="text" className="mt-1" />
+            </div>
+
+            <div>
+              <label className="font-semibold">Last Name</label>
+              <Input type="text" className="mt-1" />
+            </div>
+          </div>
+
+          {/* PHONE */}
+          <div className="mb-4">
+            <label className="font-semibold">Phone Number</label>
+            <Input type="text" className="mt-1" />
+          </div>
+
+          {/* EMAIL */}
+          <div className="mb-4">
+            <label className="font-semibold">Email</label>
+            <Input type="email" className="mt-1" />
+          </div>
+
+          {/* PASSWORD */}
+          <div className="mb-4">
+            <label className="font-semibold">Set Password</label>
+            <Input type="password" className="mt-1" />
+          </div>
+
+          <div className="mb-6">
+            <label className="font-semibold">Confirm Password</label>
+            <Input type="password" className="mt-1" />
+          </div>
+
+          {/* BUTTONS */}
+          <div className="flex justify-between mt-6">
+            <button
+              type="reset"
+              className="border p-2 px-4 rounded-xl border-amber-500 text-amber-500 hover:bg-amber-50 duration-200"
+            >
+              Clear All
+            </button>
+
+            <Button className="bg-orange-400 text-white px-6 rounded-xl hover:bg-orange-500">
+              Submit
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Signup;
